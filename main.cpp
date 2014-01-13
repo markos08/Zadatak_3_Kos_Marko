@@ -169,7 +169,7 @@ void pomocni(queue*red)
 int br_pom,br_pomocni,br_brzi;
 void rekurzija(queue*red,int posto,int pozicija)
 {
-  if(IsEmptyQ(red)){//SIDRENI UVJET, dosli smo do kraja rekurzije!
+  if(IsEmptyQ(red)){
   		cout<<"\nStanje na pomocnom redu\n";
 		cout<<"-------------------------\n";
 		return;
