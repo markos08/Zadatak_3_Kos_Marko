@@ -117,7 +117,6 @@ void dodaj(queue*red)
             jedna_osoba->ei=generirani_brojevi[i].ei;
             EnQueueQ(jedna_osoba,red);
             kopiraj(&pacijenti[br],jedna_osoba);
-            //memcpy(&pacijenti[br],jedna_osoba,sizeof(covjek));
             br++;
         }
     for(int i=0; i<N*3; i++)
@@ -162,48 +161,43 @@ void pomocni(queue*red)
         covjek*jedna_osoba=new covjek;
         kopiraj(jedna_osoba,&pomocni[i]);
         EnQueueQ(jedna_osoba,red);
+        ispis(&pomocni[i]);
     }
     cout<<"Stanje na redu nakon izbacivanja: \n";
-    for(int i=0;i<redni_broj_pom;i++)
-          ispis(&pom[i]);  
 }
 //-----------------------------------------------
 int br_pom,br_pomocni,br_brzi;
 void rekurzija(queue*red,int posto,int pozicija)
 {
-    if(IsEmptyQ(red))return;
-    covjek*pomocni=new covjek;
-    if(pozicija<posto)
-    {
-        pomocni=FrontQ(red);
-        DeQueueQ(red);
-        pozicija++;
-        kopiraj(&pom[br_pom],pomocni);
-        br_pom++;
-        rekurzija(red,posto,pozicija);
+  if(IsEmptyQ(red)){//SIDRENI UVJET, dosli smo do kraja rekurzije!
+  		cout<<"\nStanje na pomocnom redu\n";
+		cout<<"-------------------------\n";
+		return;
+   }
+   covjek*pomocni=new covjek;
+   if(pozicija<posto){
+   	pomocni=FrontQ(red);
+   	ispis(pomocni);
+   	DeQueueQ(red);
+   	pozicija++;
+	rekurzija(red,posto,pozicija);
     }
-    else
-        while(!IsEmptyQ(red))
-        {
-            pomocni=FrontQ(red);
-            kopiraj(&pom2[br_pomocni],pomocni);
-            br_pomocni++;
-            kopiraj(&brzi_red[br_brzi],pomocni);
-            br_brzi++;
-            DeQueueQ(red);
-        }
-    EnQueueQ(pomocni,red);
+	
+    else{
+	pomocni=FrontQ(red);
+	pozicija++;
+	DeQueueQ(red);
+	rekurzija(red,posto,pozicija);
+    }
+	
+    if(pozicija>posto){
+		ispis(pomocni);
+		pozicija--;
+    }
+else
+		EnQueueQ(pomocni,red);
 }
 
-//-----------------------------------------------
-void obrni_red(queue*red)
-{
-    if(IsEmptyQ(red))return;
-    covjek*pomocni=new covjek;
-    pomocni=FrontQ(red);
-    DeQueueQ(red);
-    EnQueueQ(pomocni,red);
-}
 //-----------------------------------------------
 int main()
 {
@@ -226,15 +220,10 @@ int main()
         else if(izbor==3)pomocni(red);
         else if(izbor==4)
         {
-             br_pom=0,br_pomocni=0,br_brzi=0;
-            int posto=0.7*ukupno;
-            rekurzija(red,posto,0);
-            cout<<"Stanje na glavnom redu: "<<endl;
-            for(int i=0;i<br_pom;i++)
-                    ispis(&pom[i]);
-            cout<<"Stanje na pomocnom redu: "<<endl;
-            for(int i=br_pomocni-1;i>=0;i--)
-                    ispis(&pom2[i]);
+          	int posto=0.7*ukupno;
+         	cout<<"Stanje na glavnom redu: \n";
+         	cout<<"----------------------\n";
+        	rekurzija(red,posto,0);
         }
     }
     while(izbor!=9);
