@@ -5,7 +5,6 @@ struct covjek
 {
     int ai,bi,ci,di,ei,datum;
     char ime[20],prezime[20],spol[1];
-    covjek*sljedeci;
 };
 
 int AddOne(int n)
