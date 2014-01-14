@@ -17,15 +17,12 @@ struct queue
     covjek*pacijent[10000];
     int front,rear;
 };
+
 void EnQueueQ (covjek*pacijent, queue *red)
 {
-    if (AddOne(AddOne(red->rear)) == (red->front))
-        cout<<"Red je pun "<<endl;
-    else
-    {
-        red->rear = AddOne(red->rear);
-        red->pacijent[red->rear] = pacijent;
-    }
+    red->rear = AddOne(red->rear);
+    red->pacijent[red->rear] = pacijent;
+    
 }
 
 int IsEmptyQ(queue*red)
